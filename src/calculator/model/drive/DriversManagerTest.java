@@ -60,10 +60,10 @@ public class DriversManagerTest
     @Test
     public void endTripTest(){
 	driversManager.endTrip("44234","1234990");
-        boolean checkEndTrip = false;
+        boolean checkEndTrip = true;
         if(driversManager.getDriver("1234990").getBalance() >= 10f && driversManager.getPassenger("44234").getBalance() < 100)
         {
-            checkEndTrip = true;
+            checkEndTrip = false;
         }
         Assert.assertEquals("Trip is not Ended!",true , checkEndTrip);
     }
