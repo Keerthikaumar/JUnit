@@ -23,21 +23,55 @@ public class DriversManagerTest
         driversManager.addDriver( new Driver( "Pedro", "12312440", 12f ) );
         driversManager.addDriver( new Driver( "Constanza", "9824990", 11f ) );
     }
+	
+     @Test
+    public void Passenger(){
+        Passenger firstPassenger = driversManager.getPassenger("44234");
+        boolean checkObj = false;
+        if("Carlos" == firstPassenger.getName() && "44234" == firstPassenger.getId() && 100 == firstPassenger.getBalance())
+        {
+            checkObj = true;
+        }
+        Assert.assertEquals("Passenger is Not added..!",true , checkObj);
+    }
+	
+     @Test
+    public void Driver(){
+        Driver firstDriver = driversManager.getDriver("1234990");
+        boolean checkObj = false;
+        if("Emilio" == firstDriver.getName() && "1234990" == firstDriver.getId() && 10f == firstDriver.getFee())
+        {
+            checkObj = true;
+        }
+        Assert.assertEquals("Driver is Not added..!",true , checkObj);
+    }
 
     @Test
     public void startTripTest(){
-	driversManager.startTrip("44234","1234990");
-	driversManager.startTrip("44234","1234990");
+	driversManager.startTrip("44234","9824990");
+        boolean checkTrip = false;
+        if(driversManager.getDriver("9824990").isAvailable() == false && driversManager.getPassenger("44234").isOnTrip() == true)
+        {
+            checkTrip = true;
+        }
+        Assert.assertEquals("Trip not Started..!",true , checkTrip);
     }
 
     @Test
     public void endTripTest(){
 	driversManager.endTrip("44234","1234990");
+        boolean checkEndTrip = false;
+        if(driversManager.getDriver("1234990").getBalance() >= 10f && driversManager.getPassenger("44234").getBalance() < 100)
+        {
+            checkEndTrip = true;
+        }
+        Assert.assertEquals("Trip not Ended..!",true , checkEndTrip);
     }
 
     @Test
     public void nextAvailableDriverTest(){
-	String result = driversManager.findNextAvailableDriver();
-	Assert.assertEquals(result,"1234990");
+	driversManager.endTrip("44234","9824990");
+        String availableDriver = driversManager.findNextAvailableDriver();
+        Assert.assertEquals("9824990" , availableDriver);
     }
 }
